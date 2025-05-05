@@ -36,11 +36,11 @@ jobs:
           npm run build
 
       - name: Archive frontend build artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: frontend-build
-          path: ./bugtracker/frontend/build
-
+         name: frontend-build
+         path: ./bugtracker/frontend/build
+    
       # Optional Docker build step
       # - name: Build Docker image
       #   run: docker build -t my-bugtracker ./bugtracker
