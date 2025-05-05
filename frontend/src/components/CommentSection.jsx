@@ -33,7 +33,7 @@ function CommentSection({ bugId }) {
       console.error("Failed to add comment.");
     }
   };
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (bugId) fetchComments();
   }, [bugId]);
