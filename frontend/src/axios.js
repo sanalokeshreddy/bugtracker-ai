@@ -1,9 +1,7 @@
-// axios.js
-import axios from "axios";
+import axios from 'axios';
 
-export default axios.create({
-  baseURL: "http://localhost:8080",
-  headers: {
-    "Content-Type": "application/json",
-  },
+const instance = axios.create({
+  baseURL: 'https://bugtracker-back.onrender.com', // ✅ Render backend URL
 });
+
+export default instance;
