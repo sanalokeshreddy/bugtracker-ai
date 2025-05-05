@@ -34,7 +34,7 @@ jobs:
       - name: 🌐 Install & build React frontend
         working-directory: ./frontend
         run: |
-          npm ci
+          npm install
           npm run build
 
       - name: 📦 Archive frontend build artifacts
