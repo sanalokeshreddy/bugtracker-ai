@@ -1,0 +1,46 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Build Spring Boot backend
+        working-directory: ./bugtracker
+        run: ./mvnw clean package -DskipTests
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install & build React frontend
+        working-directory: ./bugtracker/frontend
+        run: |
+          npm ci
+          npm run build
+
+      - name: Archive frontend build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: frontend-build
+          path: ./bugtracker/frontend/build
+
+      # Optional Docker build step
+      # - name: Build Docker image
+      #   run: docker build -t my-bugtracker ./bugtracker
