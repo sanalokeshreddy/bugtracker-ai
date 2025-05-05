@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "../axios";
 
 function CommentSection({ bugId }) {
@@ -6,7 +6,7 @@ function CommentSection({ bugId }) {
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const fetchComments = async () => {
+  const fetchComments = useCallback(async () => {
     try {
       setLoading(true);
       const res = await axios.get(`/bugs/${bugId}/comments`);
@@ -16,7 +16,7 @@ function CommentSection({ bugId }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [bugId]);
 
   const handleAddComment = async (e) => {
     e.preventDefault();
@@ -24,7 +24,7 @@ function CommentSection({ bugId }) {
       if (!text.trim()) return;
       await axios.post(`/bugs/${bugId}/comments`, {
         text,
-        user: { id: 1 }, // 👈 hardcoded or dynamic later
+        user: { id: 1 },
       });
       setText("");
       fetchComments();
@@ -33,11 +33,9 @@ function CommentSection({ bugId }) {
     }
   };
 
-  // ✅ Disable lint rule for safe useEffect
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (bugId) fetchComments();
-  }, [bugId]);
+  }, [bugId, fetchComments]);
 
   return (
     <div className="mt-4 bg-gray-50 p-4 rounded-lg border">
