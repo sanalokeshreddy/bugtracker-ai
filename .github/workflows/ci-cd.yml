@@ -21,7 +21,6 @@ jobs:
           java-version: '17'
 
       - name: Build Spring Boot backend
-        working-directory: ./bugtracker
         run: ./mvnw clean package -DskipTests
 
       - name: Set up Node.js
