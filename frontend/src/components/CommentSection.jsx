@@ -1,4 +1,3 @@
-// components/CommentSection.jsx
 import React, { useEffect, useState } from "react";
 import axios from "../axios";
 
@@ -33,6 +32,8 @@ function CommentSection({ bugId }) {
       console.error("Failed to add comment.");
     }
   };
+
+  // ✅ Disable lint rule for safe useEffect
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (bugId) fetchComments();
